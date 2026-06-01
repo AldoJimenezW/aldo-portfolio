@@ -1,0 +1,240 @@
+---
+import SkillMarquee from './SkillMarquee.astro';
+---
+
+<section class="hero" id="inicio" aria-label="Hero">
+
+  <SkillMarquee />
+
+  <div class="hero-top">
+    <div class="hero-taglines">
+      <p class="hero-tag">
+        <span class="tag-text">Ingeniero Civil Informático</span>
+        <span class="tag-text" aria-hidden="true">Ingeniero Civil Informático</span>
+      </p>
+      <p class="hero-tag">
+        <span class="tag-text">Amante del café y la tecnología</span>
+        <span class="tag-text" aria-hidden="true">Amante del café y la tecnología</span>
+      </p>
+      <p class="hero-tag">
+        <span class="tag-text">Desarrollador de Software</span>
+        <span class="tag-text" aria-hidden="true">Desarrollador de Software</span>
+      </p>
+      <p class="hero-tag">
+        <span class="tag-text">Siempre aprendiendo</span>
+        <span class="tag-text" aria-hidden="true">Siempre aprendiendo</span>
+      </p>
+    </div>
+
+    <div class="hero-photo">
+      <div class="photo-box">
+        <img src="/Foto-Aldo.png" alt="Aldo Jiménez Wiehoff" loading="eager" />
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="hero-name" id="hero-name">
+      ALDO<span class="name-sup">JW</span>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  /* Hero shell */
+  .hero {
+    height: 100svh;
+    padding-top: 56px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Top: taglines + photo */
+  .hero-top {
+    flex: 0.55;
+    display: grid;
+    grid-template-columns: 1fr minmax(180px, 28%);
+    align-items: center;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.2rem, 4vw, 2.8rem);
+    gap: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-taglines {
+    display: flex;
+    flex-direction: column;
+    gap: 0.06em;
+  }
+
+  .hero-tag {
+    font-family: var(--D);
+    font-weight: 700;
+    font-size: clamp(1.15rem, 2.5vw, 2rem);
+    line-height: 1.28;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: default;
+
+    opacity: 0;
+    transform: translateY(-36px);
+    transition: opacity 0.7s var(--spring), transform 0.7s var(--spring);
+  }
+  .hero-tag.on {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Elevator hover effect */
+  .hero-tag {
+    position: relative;
+    overflow: hidden;
+  }
+  .tag-text {
+    display: block;
+    transition: transform 0.5s var(--spring);
+  }
+  .tag-text:nth-child(2) {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    color: var(--fg);
+  }
+  .hero-tag.on:hover .tag-text:nth-child(1) {
+    transform: translateY(-100%);
+  }
+  .hero-tag.on:hover .tag-text:nth-child(2) {
+    transform: translateY(-100%);
+  }
+
+  /* Photo */
+  .hero-photo {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.7s var(--spring), transform 0.7s var(--spring);
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+  }
+  .hero-photo.on { opacity: 1; transform: translateY(0); }
+
+  .photo-box {
+    width: 92%;
+    aspect-ratio: 1 / 1.15;
+    background: #111;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  .photo-box::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.035) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  /* Hero bottom: name */
+  .hero-bottom {
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 clamp(1.2rem, 4vw, 2.8rem) clamp(3rem, 6vh, 5rem);
+    z-index: 2;
+  }
+
+  .hero-name {
+    font-family: var(--D);
+    font-weight: 900;
+    font-size: var(--nsz);
+    line-height: 0.92;
+    letter-spacing: -0.038em;
+    white-space: nowrap;
+    opacity: 0;
+    position: relative;
+    z-index: 2;
+    padding-bottom: 0.05em;
+    transform: translateY(-80px);
+  }
+
+  .hero-name .name-sup {
+    font-size: 0.38em;
+    font-weight: 600;
+    vertical-align: top;
+    position: relative;
+    top: 0.22em;
+    letter-spacing: -0.01em;
+  }
+
+  /* Mobile layout */
+  @media (max-width: 768px) {
+    .hero {
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .hero-top {
+      flex: 0 0 auto;
+      grid-template-columns: 1fr;
+      align-items: center;
+      justify-items: center;
+      text-align: center;
+      padding: 0 clamp(1.2rem, 4vw, 2.8rem);
+      gap: 0.5rem;
+      order: 1;
+    }
+
+    .hero-photo {
+      order: -1;
+      margin: 0;
+    }
+    .photo-box {
+      width: 100px;
+      height: 100px;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+    }
+    .photo-box img {
+      object-position: center;
+    }
+
+    .hero-taglines {
+      justify-content: center;
+      gap: 0.35rem;
+    }
+
+    .hero-tag {
+      font-size: clamp(0.9rem, 3.8vw, 1.25rem);
+      transform: translateY(-20px);
+    }
+
+    .hero-bottom {
+      flex: 0 0 auto;
+      justify-content: flex-end;
+      padding: 0 clamp(1.2rem, 4vw, 2.8rem) clamp(2rem, 4vh, 3rem);
+      order: 3;
+    }
+
+    .hero-name {
+      font-size: clamp(44px, 13vw, 90px);
+      line-height: 0.88;
+      transform: translateY(-40px);
+    }
+  }
+</style>

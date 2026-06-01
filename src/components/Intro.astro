@@ -1,0 +1,54 @@
+---
+---
+
+<div id="intro-bg" aria-hidden="true"></div>
+
+<div id="intro-name" aria-hidden="true">
+  ALDO<span class="name-sup">JW</span>
+</div>
+
+<style>
+  /* Background layer */
+  #intro-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: var(--cream);
+    pointer-events: none;
+    transition: background 1.15s var(--ease), opacity 1s ease;
+  }
+  #intro-bg.dark { background: var(--bg); }
+  #intro-bg.gone { opacity: 0; }
+
+  /* Moving name */
+  #intro-name {
+    position: fixed;
+    z-index: 9001;
+    left: 50%;
+    /* Start centered in the viewport */
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+
+    font-family: var(--D);
+    font-weight: 900;
+    font-size: var(--nsz);
+    line-height: 0.82;
+    letter-spacing: -0.038em;
+    white-space: nowrap;
+    will-change: transform;
+
+    color: var(--bg);
+    transition: color 0.9s var(--ease);
+  }
+  #intro-name.lit { color: var(--fg); }
+
+  #intro-name .name-sup {
+    font-size: 0.38em;
+    font-weight: 600;
+    vertical-align: top;
+    position: relative;
+    top: 0.22em;
+    letter-spacing: -0.01em;
+  }
+</style>

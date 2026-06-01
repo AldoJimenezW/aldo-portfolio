@@ -1,0 +1,221 @@
+---
+import { translations } from '../i18n/translations';
+
+const { exp } = translations.es;
+---
+
+<section class="sec" id="exp">
+  <p class="sec-num" data-i18n="exp.num">03 — Experiencia</p>
+  <h2 class="sec-title rev" data-i18n="exp.title">Trayectoria</h2>
+
+  <div class="exp-list" id="exp-list">
+    {exp.items.map((item, i) => (
+      <article class="exp-item rev" data-index={i}>
+        <div class="exp-meta">
+          <span class="exp-date" data-i18n={`exp.items.${i}.date`}>{item.date}</span>
+          <span class="exp-badge" data-i18n={`exp.items.${i}.badge`}>{item.badge}</span>
+        </div>
+        <div class="exp-body">
+          <h3 class="exp-role" data-i18n={`exp.items.${i}.role`}>{item.role}</h3>
+          <p class="exp-co" data-i18n={`exp.items.${i}.company`}>{item.company}</p>
+          <ul class="exp-pts">
+            {item.bullets.map((b, bi) => <li data-i18n={`exp.items.${i}.bullets.${bi}`}>{b}</li>)}
+          </ul>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* List */
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Item */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding: clamp(2.2rem, 3.5vw, 3.2rem) 0;
+    position: relative;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.85s var(--spring), transform 0.85s var(--spring);
+  }
+
+  .exp-item.on {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .exp-item:nth-child(1) { transition-delay: 0s; }
+  .exp-item:nth-child(2) { transition-delay: 0.12s; }
+  .exp-item:nth-child(3) { transition-delay: 0.24s; }
+  .exp-item:nth-child(4) { transition-delay: 0.36s; }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--border);
+    transition: width 0.9s var(--spring), background 0.5s ease;
+  }
+
+  .exp-item.on::before {
+    width: 100%;
+  }
+
+  .exp-item:hover::before {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .exp-item:last-child::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--border);
+    transition: width 0.9s var(--spring);
+  }
+
+  .exp-item:last-child.on::after {
+    width: 100%;
+  }
+
+  /* Meta column */
+  .exp-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding-top: 0.2rem;
+  }
+
+  .exp-date {
+    font-size: 0.74rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    transition: color 0.35s ease;
+  }
+
+  .exp-item:hover .exp-date {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .exp-badge {
+    display: inline-flex;
+    align-self: flex-start;
+    font-size: 0.56rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 0.22rem 0.65rem;
+    color: var(--muted);
+    font-weight: 500;
+    transition: border-color 0.4s ease, color 0.4s ease;
+  }
+
+  .exp-item:hover .exp-badge {
+    border-color: rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  /* Body column */
+  .exp-body {
+    transition: transform 0.5s var(--spring);
+  }
+
+  .exp-item:hover .exp-body {
+    transform: translateX(6px);
+  }
+
+  .exp-role {
+    font-family: var(--D);
+    font-weight: 700;
+    font-size: clamp(1.05rem, 1.9vw, 1.28rem);
+    line-height: 1.25;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.01em;
+    transition: color 0.35s ease;
+  }
+
+  .exp-item:hover .exp-role {
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .exp-co {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 1.1rem;
+    transition: color 0.35s ease;
+  }
+
+  .exp-item:hover .exp-co {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .exp-pts {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .exp-pts li {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.38);
+    padding-left: 1.3rem;
+    position: relative;
+    line-height: 1.55;
+    transition: color 0.35s ease;
+  }
+
+  .exp-item:hover .exp-pts li {
+    color: rgba(255, 255, 255, 0.52);
+  }
+
+  .exp-pts li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: rgba(255, 255, 255, 0.15);
+    font-size: 0.75rem;
+    top: -0.05em;
+    transition: color 0.35s ease;
+  }
+
+  .exp-item:hover .exp-pts li::before {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .exp-item {
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
+      padding: 1.8rem 0;
+    }
+    .exp-meta {
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 0;
+    }
+    .exp-body {
+      transition: none;
+    }
+    .exp-item:hover .exp-body {
+      transform: none;
+    }
+    .exp-role {
+      font-size: 1rem;
+    }
+  }
+</style>

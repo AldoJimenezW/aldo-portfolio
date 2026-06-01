@@ -1,0 +1,104 @@
+/* Global styles */
+:root {
+  --bg:      #080808;
+  --fg:      #ffffff;
+  --cream:   #eeeae3;
+  --muted:   #686868;
+  --border:  rgba(255, 255, 255, 0.08);
+  --green:   #4ade80;
+
+  /* Typography */
+  --D: 'Unbounded', sans-serif;
+  --B: 'DM Sans', sans-serif;
+
+  --nsz: clamp(80px, 18vw, 210px);
+
+  --ease:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --spring: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--B);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+}
+
+/* Scroll reveal — toggled by IntersectionObserver */
+.rev {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--spring), transform 0.8s var(--spring);
+}
+.rev.on { opacity: 1; transform: none; }
+.rev.d1  { transition-delay: 0.12s; }
+.rev.d2  { transition-delay: 0.24s; }
+.rev.d3  { transition-delay: 0.38s; }
+
+/* Availability dot pulse */
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(74, 222, 128, 0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
+  100% { box-shadow: 0 0 0 0   rgba(74, 222, 128, 0); }
+}
+
+/* Marquee animation */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Sections — shared base */
+.sec {
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.2rem, 4vw, 2.8rem);
+  border-top: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sec-num {
+  font-size: 0.64rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.8rem;
+  font-weight: 500;
+}
+
+.sec-title {
+  font-family: var(--D);
+  font-weight: 900;
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  line-height: 0.92;
+  letter-spacing: -0.028em;
+  margin-bottom: 2.4rem;
+}
+
+/* Tags */
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.28rem 0.78rem;
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: border-color 0.25s, color 0.25s;
+}

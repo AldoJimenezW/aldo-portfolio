@@ -1,0 +1,265 @@
+---
+import { translations } from '../i18n/translations';
+
+const { proyectos } = translations.es;
+---
+
+<section class="sec" id="proyectos">
+  <p class="sec-num" data-i18n="proyectos.num">04 — Proyectos</p>
+  <h2 class="sec-title rev" data-i18n="proyectos.title">Proyectos</h2>
+
+  <div class="proj-list" id="proj-list">
+    {proyectos.items.map((item, i) => (
+      <a
+        href={item.href}
+        class="proj-item rev"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-index={i}
+      >
+        <div class="proj-meta">
+          <span class="proj-date" data-i18n={`proyectos.items.${i}.date`}>{item.date}</span>
+          <span class="proj-badge" data-i18n={`proyectos.items.${i}.badge`}>{item.badge}</span>
+        </div>
+        <div class="proj-body">
+          <h3 class="proj-role" data-i18n={`proyectos.items.${i}.role`}>{item.role}</h3>
+          <p class="proj-co" data-i18n={`proyectos.items.${i}.company`}>{item.company}</p>
+          <ul class="proj-pts">
+            {item.bullets.map((b, bi) => <li data-i18n={`proyectos.items.${i}.bullets.${bi}`}>{b}</li>)}
+          </ul>
+          <div class="proj-link-hint">
+            <span class="proj-link-text" data-i18n="proyectos.verRepo">Ver repositorio</span>
+            <span class="proj-link-arrow" aria-hidden="true">↗</span>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* List */
+  .proj-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Item (clickable row) */
+  .proj-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding: clamp(2.2rem, 3.5vw, 3.2rem) 0;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.85s var(--spring), transform 0.85s var(--spring);
+    cursor: pointer;
+  }
+
+  .proj-item.on {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .proj-item:nth-child(1) { transition-delay: 0s; }
+  .proj-item:nth-child(2) { transition-delay: 0.12s; }
+  .proj-item:nth-child(3) { transition-delay: 0.24s; }
+
+  .proj-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--border);
+    transition: width 0.9s var(--spring), background 0.5s ease;
+  }
+
+  .proj-item.on::before {
+    width: 100%;
+  }
+
+  .proj-item:hover::before {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .proj-item:last-child::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--border);
+    transition: width 0.9s var(--spring);
+  }
+
+  .proj-item:last-child.on::after {
+    width: 100%;
+  }
+
+  /* Meta column */
+  .proj-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding-top: 0.2rem;
+  }
+
+  .proj-date {
+    font-size: 0.74rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    transition: color 0.35s ease;
+  }
+
+  .proj-item:hover .proj-date {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .proj-badge {
+    display: inline-flex;
+    align-self: flex-start;
+    font-size: 0.56rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 0.22rem 0.65rem;
+    color: var(--muted);
+    font-weight: 500;
+    transition: border-color 0.4s ease, color 0.4s ease;
+  }
+
+  .proj-item:hover .proj-badge {
+    border-color: rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  /* Body column */
+  .proj-body {
+    transition: transform 0.5s var(--spring);
+  }
+
+  .proj-item:hover .proj-body {
+    transform: translateX(6px);
+  }
+
+  .proj-role {
+    font-family: var(--D);
+    font-weight: 700;
+    font-size: clamp(1.05rem, 1.9vw, 1.28rem);
+    line-height: 1.25;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.01em;
+    transition: color 0.35s ease;
+  }
+
+  .proj-item:hover .proj-role {
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .proj-co {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 1.1rem;
+    transition: color 0.35s ease;
+  }
+
+  .proj-item:hover .proj-co {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .proj-pts {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.2rem;
+  }
+  .proj-pts li {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.38);
+    padding-left: 1.3rem;
+    position: relative;
+    line-height: 1.55;
+    transition: color 0.35s ease;
+  }
+
+  .proj-item:hover .proj-pts li {
+    color: rgba(255, 255, 255, 0.52);
+  }
+
+  .proj-pts li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: rgba(255, 255, 255, 0.15);
+    font-size: 0.75rem;
+    top: -0.05em;
+    transition: color 0.35s ease;
+  }
+
+  .proj-item:hover .proj-pts li::before {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  /* Link hint */
+  .proj-link-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.35s ease;
+    opacity: 0.55;
+  }
+
+  .proj-item:hover .proj-link-hint {
+    color: var(--fg);
+    opacity: 1;
+  }
+
+  .proj-link-arrow {
+    font-size: 0.9rem;
+    transition: transform 0.3s var(--spring);
+    display: inline-block;
+  }
+
+  .proj-item:hover .proj-link-arrow {
+    transform: translate(3px, -3px);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .proj-item {
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
+      padding: 1.8rem 0;
+    }
+    .proj-meta {
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 0;
+    }
+    .proj-body {
+      transition: none;
+    }
+    .proj-item:hover .proj-body {
+      transform: none;
+    }
+    .proj-role {
+      font-size: 1rem;
+    }
+    .proj-link-hint {
+      margin-top: 0.4rem;
+    }
+  }
+</style>

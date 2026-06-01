@@ -1,0 +1,228 @@
+---
+import { translations } from '../i18n/translations';
+
+const { skills } = translations.es;
+const cats = skills.categories;
+---
+
+<section class="skills-section" id="skills">
+  <div class="skills-intro">
+    <p class="sec-num" data-i18n="skills.num">02 — Habilidades</p>
+    <h2 class="sec-title" data-i18n="skills.title">Stack Técnico</h2>
+  </div>
+
+  <div class="skills-track" id="skills-track">
+    <div class="skills-window" id="skills-window">
+
+      <div class="window-bg" id="window-bg">
+        <img src="/gra.webp" alt="" loading="lazy" />
+      </div>
+
+      <div class="window-rail" id="window-rail">
+        {cats.map((cat, ci) => (
+          <div class="rail-group">
+            <span class="rail-num">0{ci + 1}</span>
+            <h3 class="rail-cat" data-i18n={`skills.categories.${ci}.name`}>{cat.name}</h3>
+            <div class="rail-tags">
+              {cat.tags.map(tag => (
+                <span class="rail-tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="window-fade window-fade--top"></div>
+      <div class="window-fade window-fade--bottom"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const track = document.getElementById('skills-track') as HTMLElement;
+    const rail  = document.getElementById('window-rail') as HTMLElement;
+    const bg    = document.getElementById('window-bg') as HTMLElement;
+    if (!track || !rail || !bg) return;
+
+    function setTrackHeight() {
+      const winH = window.innerHeight;
+      const railH = rail.offsetHeight;
+      track.style.height = `${winH + railH}px`;
+      update();
+    }
+
+    function update() {
+      const trackRect = track.getBoundingClientRect();
+      const winH      = window.innerHeight;
+      const trackH    = track.offsetHeight;
+      const railH     = rail.offsetHeight;
+
+      const scrolled = -trackRect.top;
+      const range    = trackH - winH;
+      let progress   = scrolled / range;
+      progress = Math.max(0, Math.min(1, progress));
+
+      const travel = railH * 0.65;
+      rail.style.transform = `translateY(${-progress * travel}px)`;
+      bg.style.transform = `translateY(${-progress * 25}%)`;
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', () => { setTrackHeight(); });
+    setTrackHeight();
+  })();
+</script>
+
+<style>
+  /* Section */
+  .skills-section {
+    position: relative;
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.2rem, 4vw, 2.8rem);
+    border-top: 1px solid var(--border);
+  }
+
+  .skills-intro {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Track */
+  .skills-track {
+    position: relative;
+    width: 100%;
+    /* height set by JS */
+  }
+
+  /* Sticky window */
+  .skills-window {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: #0a0a0a;
+  }
+
+  /* Background */
+  .window-bg {
+    position: absolute;
+    inset: -15% 0;
+    z-index: 1;
+    will-change: transform;
+  }
+  .window-bg img {
+    width: 100%;
+    height: 130%;
+    object-fit: cover;
+    opacity: 0.1;
+    filter: grayscale(100%);
+  }
+
+  /* Rail */
+  .window-rail {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-top: 20vh; /* first group starts visible */
+    padding-bottom: 45vh; /* last group pushed up so it stays in view at the end */
+    gap: 5vh;
+    will-change: transform;
+  }
+
+  .rail-group {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 3vh 2rem;
+    min-height: auto;
+    justify-content: center;
+    gap: 0.8rem;
+    max-width: 720px;
+    width: 100%;
+  }
+
+  .rail-num {
+    font-family: var(--D);
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    opacity: 0.45;
+  }
+
+  .rail-cat {
+    font-family: var(--D);
+    font-size: clamp(0.7rem, 1vw, 0.85rem);
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .rail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem 1.4rem;
+    margin-top: 0.6rem;
+  }
+
+  .rail-tag {
+    font-family: var(--D);
+    font-size: clamp(1.6rem, 3.8vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: rgba(255,255,255,0.92);
+    white-space: nowrap;
+    transition: color 0.3s ease;
+  }
+  .rail-tag:hover {
+    color: var(--fg);
+  }
+
+  /* Edge fades */
+  .window-fade {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .window-fade--top {
+    top: 0;
+    height: 10vh;
+    background: linear-gradient(to bottom, #0a0a0a 0%, transparent 100%);
+  }
+  .window-fade--bottom {
+    bottom: 0;
+    height: 10vh;
+    background: linear-gradient(to top, #0a0a0a 0%, transparent 100%);
+  }
+
+  @media (max-width: 768px) {
+    .skills-window {
+      border-radius: 14px;
+    }
+    .window-rail {
+      padding-top: 14vh;
+      padding-bottom: 36vh;
+      gap: 4vh;
+    }
+    .rail-group {
+      padding: 3vh 1.2rem;
+    }
+    .rail-tag {
+      font-size: 1.3rem;
+    }
+    .window-fade {
+      height: 8vh;
+    }
+  }
+</style>

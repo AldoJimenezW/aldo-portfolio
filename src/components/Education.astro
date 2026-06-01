@@ -1,0 +1,90 @@
+---
+import { translations } from '../i18n/translations';
+
+const { edu } = translations.es;
+---
+
+<section class="sec" id="edu">
+  <p class="sec-num" data-i18n="edu.num">05 — Formación</p>
+  <h2 class="sec-title rev" data-i18n="edu.title">Educación</h2>
+  <p class="sec-subtitle rev d1" data-i18n="edu.subtitle">&amp; Certificaciones</p>
+
+  <div class="edu-grid rev d1">
+
+    <div>
+      <p class="col-head" data-i18n="edu.col1">Educación</p>
+      {edu.degrees.map((d) => (
+        <div class="edu-item">
+          <p class="edu-name">{d.name}</p>
+          <p class="edu-inst">{d.inst}</p>
+          <p class="edu-yr">{d.year}</p>
+        </div>
+      ))}
+    </div>
+
+    <div>
+      <p class="col-head" data-i18n="edu.col2">Certificaciones</p>
+      {edu.certs.map((c) => (
+        <div class="edu-item">
+          <p class="edu-name">{c.name}</p>
+          <p class="edu-inst">{c.inst}</p>
+          <p class="edu-yr">{c.year}</p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .sec-subtitle {
+    font-family: var(--D);
+    font-weight: 700;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    line-height: 1;
+    color: var(--muted);
+    margin-top: -1.8rem;
+    margin-bottom: 2.4rem;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.85s var(--spring), transform 0.85s var(--spring);
+  }
+  .sec-subtitle.on {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .col-head {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .edu-item {
+    border-top: 1px solid var(--border);
+    padding: 1.2rem 0;
+  }
+
+  .edu-name {
+    font-family: var(--D);
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 0.3rem;
+  }
+  .edu-inst { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.15rem; }
+  .edu-yr   { font-size: 0.68rem; color: rgba(255, 255, 255, 0.25); }
+
+  @media (max-width: 768px) {
+    .edu-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>
