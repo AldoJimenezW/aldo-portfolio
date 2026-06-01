@@ -12,9 +12,8 @@
 </p>
 
 <p align="center">
-  <a href="https://aldojimenezw.dev" target="_blank">🌐 Live Site</a> •
+  <a href="https://aldojw.rootixs.com" target="_blank">🌐 Live Site</a> •
   <a href="https://www.linkedin.com/in/aldo-jimenez-wiehoff/" target="_blank">LinkedIn</a> •
-  <a href="https://github.com/AldoJimenezW" target="_blank">GitHub</a>
 </p>
 
 <p align="center">
@@ -34,13 +33,6 @@ The site features a cinematic intro animation, bilingual support (ES/EN), smooth
 
 ---
 
-## Preview
-
-| Desktop | Mobile |
-|---------|--------|
-| *(screenshot placeholder)* | *(screenshot placeholder)* |
-
----
 
 ## Stack
 
@@ -54,49 +46,6 @@ The site features a cinematic intro animation, bilingual support (ES/EN), smooth
 | Fonts | Unbounded (display) + DM Sans (body) via Google Fonts |
 
 **No UI frameworks.** Every component is a native `.astro` file with scoped `<style>`.
-
----
-
-## Features
-
-- **🎬 Cinematic intro** — name drops from the center of the screen into the hero using FLIP math with pixel-perfect timing
-- **🌐 Bilingual (ES/EN)** — client-side i18n toggle; all copy lives in `src/i18n/translations.ts`
-- **🧈 Smooth scroll** — Lenis with section snap (disabled inside Skills so the 3D stack scrolls freely)
-- **🎴 Interactive card stack** — auto-rotating info cards with keyboard, touch, and arrow navigation
-- **🎞️ Infinite marquee** — skill ticker built at runtime for language switching
-- **📜 Scroll reveal** — IntersectionObserver-based entrance animations with stagger
-- **📱 Fully responsive** — mobile-first, `svh` units, and adaptive grid layouts
-
----
-
-## Project Structure
-
-```
-├── astro.config.mjs          # Static output config
-├── package.json
-├── public/                     # Static assets (photo, favicon, images)
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro        # HTML shell, fonts, meta, client JS hub
-│   ├── pages/
-│   │   └── index.astro         # Composes all sections
-│   ├── components/
-│   │   ├── Intro.astro         # Fixed intro layers (bg + name)
-│   │   ├── Nav.astro           # Fixed navbar (hide on scroll down)
-│   │   ├── Hero.astro          # Taglines, photo, name
-│   │   ├── SkillMarquee.astro  # Empty server-side; populated by JS
-│   │   ├── About.astro         # Card stack + bio
-│   │   ├── Skills.astro         # 3D-like sticky scroll tech stack
-│   │   ├── Experience.astro    # Editorial timeline
-│   │   ├── Projects.astro      # Clickable project rows
-│   │   ├── Education.astro     # Degrees + certifications
-│   │   ├── Contact.astro       # Big CTA + contact links
-│   │   └── Footer.astro
-│   ├── i18n/
-│   │   └── translations.ts     # ES/EN copy source of truth
-│   └── styles/
-│       └── global.css            # Design tokens, reset, scroll-reveal, sections
-```
 
 ---
 
@@ -137,40 +86,6 @@ npm run preview
 
 ---
 
-## Customization Guide
-
-### Replace the photo
-
-1. Add your image to `public/` (e.g., `public/photo.jpg`)
-2. In `src/components/Hero.astro`, update:
-   ```astro
-   <img src="/photo.jpg" alt="Your Name" loading="eager" />
-   ```
-
-### Update contact links
-
-Edit `src/i18n/translations.ts`:
-
-```ts
-contacto: {
-  links: [
-    { label: 'Email',    value: 'you@example.com', href: 'mailto:you@example.com' },
-    { label: 'LinkedIn', value: 'Your Name',       href: 'https://linkedin.com/in/you' },
-    { label: 'GitHub',   value: 'github.com/you',  href: 'https://github.com/you' },
-  ],
-}
-```
-
-### Add experience or projects
-
-Append new objects to `exp.items` or `proyectos.items` in `src/i18n/translations.ts`. The site renders them automatically.
-
-### Change the intro name size
-
-`--nsz` in `src/styles/global.css` must match the font-size in both `Intro.astro` and `Hero.astro`. Changing it also requires updating the FLIP delta math in `Layout.astro`.
-
----
-
 ## Architecture Notes
 
 - **Intro &rarr; Hero handoff** — `Intro.astro` provides two independent fixed layers (`#intro-bg`, `#intro-name`). They are separate so opacity changes on the background do not affect the name. `Layout.astro` orchestrates the timeline.
@@ -201,5 +116,5 @@ See [LICENSE](LICENSE) for the full terms.
 ---
 
 <p align="center">
-  Designed & developed with ♥
+  Designed & developed with ☕︎
 </p>
