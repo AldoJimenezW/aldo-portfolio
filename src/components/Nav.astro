@@ -14,8 +14,47 @@
 
   <div class="nav-right">
     <button class="lang-btn" id="lang-btn" aria-label="Toggle language">EN</button>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+  </div>
+
+  <div class="nav-mobile" id="nav-mobile">
+    <ul class="nav-mobile-links">
+      <li><a href="#inicio"   data-i18n="nav.inicio">Inicio</a></li>
+      <li><a href="#sobre"    data-i18n="nav.sobre">Sobre mí</a></li>
+      <li><a href="#exp"      data-i18n="nav.exp">Experiencia</a></li>
+      <li><a href="#proyectos" data-i18n="nav.proyectos">Proyectos</a></li>
+      <li><a href="#contacto" data-i18n="nav.contacto">Contacto</a></li>
+    </ul>
   </div>
 </nav>
+
+<script>
+  (function() {
+    const toggle = document.getElementById('nav-toggle');
+    const mobile = document.getElementById('nav-mobile');
+    if (!toggle || !mobile) return;
+
+    toggle.addEventListener('click', () => {
+      const isOpen = mobile.classList.toggle('open');
+      toggle.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+    });
+
+    mobile.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobile.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Abrir menú');
+      });
+    });
+  })();
+</script>
 
 <style>
   nav {
@@ -86,7 +125,80 @@
     color: var(--fg);
   }
 
+  /* Mobile toggle */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .nav-toggle-bar {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--fg);
+    border-radius: 1px;
+    transition: transform 0.35s var(--spring), opacity 0.25s ease;
+    transform-origin: center;
+  }
+  .nav-toggle.open .nav-toggle-bar:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .nav-toggle.open .nav-toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle.open .nav-toggle-bar:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* Mobile menu panel */
+  .nav-mobile {
+    position: fixed;
+    inset: 56px 0 auto;
+    z-index: 499;
+    background: rgba(8, 8, 8, 0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem clamp(1.2rem, 4vw, 2.8rem) 2rem;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s var(--spring);
+  }
+  .nav-mobile.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .nav-mobile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    list-style: none;
+  }
+  .nav-mobile-links a {
+    color: var(--fg);
+    text-decoration: none;
+    font-family: var(--D);
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+    display: block;
+    padding: 0.2rem 0;
+  }
+  .nav-mobile-links a:hover { color: var(--muted); }
+
   @media (max-width: 768px) {
     .nav-links { display: none; }
+    .nav-toggle { display: flex; }
   }
 </style>

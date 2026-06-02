@@ -232,9 +232,34 @@ import SkillMarquee from './SkillMarquee.astro';
     }
 
     .hero-name {
-      font-size: clamp(44px, 13vw, 90px);
-      line-height: 0.88;
-      transform: translateY(-40px);
+      font-size: clamp(40px, 12vw, 80px);
+      line-height: 0.9;
+      transform: none;
+    }
+  }
+
+  /* Very small screens */
+  @media (max-width: 380px) {
+    .hero {
+      gap: 0.35rem;
+      padding-bottom: 0.25rem;
+    }
+    .hero-top {
+      gap: 0.35rem;
+      padding: 0 1rem;
+    }
+    .hero-tag {
+      font-size: clamp(0.82rem, 3.5vw, 1.1rem);
+    }
+    .photo-box {
+      width: 85px;
+      height: 85px;
+    }
+    .hero-bottom {
+      padding: 0 1rem 1.5rem;
+    }
+    .hero-name {
+      font-size: clamp(34px, 11vw, 44px);
     }
   }
 </style>

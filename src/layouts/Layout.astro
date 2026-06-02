@@ -194,51 +194,55 @@ const { title = 'Aldo Jiménez Wiehoff' } = Astro.props;
 
   document.querySelectorAll('.rev').forEach(el => revObserver.observe(el));
 
-  // Section snap: glide to nearest section after scroll stops
-  const sections = [...document.querySelectorAll<HTMLElement>('.hero, .sec, .skills-section')];
-  const skillsSection = document.getElementById('skills') as HTMLElement;
-  const NAV_HEIGHT = 56;
-  let snapTimeout: ReturnType<typeof setTimeout> | null = null;
-  let isSnapping = false;
-  let isInSkills = false;
+  // Section snap: glide to nearest section after scroll stops (desktop only)
+  const isMobileSnap = window.innerWidth <= 768;
 
-  if (skillsSection) {
-    const skillsObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        isInSkills = e.isIntersecting;
-      });
-    }, { threshold: 0.35 });
-    skillsObs.observe(skillsSection);
-  }
+  if (!isMobileSnap) {
+    const sections = [...document.querySelectorAll<HTMLElement>('.hero, .sec, .skills-section')];
+    const skillsSection = document.getElementById('skills') as HTMLElement;
+    const NAV_HEIGHT = 56;
+    let snapTimeout: ReturnType<typeof setTimeout> | null = null;
+    let isSnapping = false;
+    let isInSkills = false;
 
-  lenis.on('scroll', () => {
-    if (isSnapping || isInSkills) return;
-    if (snapTimeout) clearTimeout(snapTimeout);
-
-    snapTimeout = setTimeout(() => {
-      const pos = lenis.scroll + NAV_HEIGHT + 20;
-      let nearest: HTMLElement | null = null;
-      let minDiff = Infinity;
-
-      sections.forEach(sec => {
-        const diff = Math.abs(pos - sec.offsetTop);
-        if (diff < minDiff) {
-          minDiff = diff;
-          nearest = sec;
-        }
-      });
-
-      // Snap only if we're off by more than 40px
-      if (nearest && minDiff > 40) {
-        isSnapping = true;
-        lenis.scrollTo((nearest as HTMLElement).offsetTop - NAV_HEIGHT, {
-          duration: 0.9,
-          easing: (t: number) => 1 - Math.pow(1 - t, 3),
-          onComplete: () => { isSnapping = false; },
+    if (skillsSection) {
+      const skillsObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          isInSkills = e.isIntersecting;
         });
-      }
-    }, 120);
-  });
+      }, { threshold: 0.35 });
+      skillsObs.observe(skillsSection);
+    }
+
+    lenis.on('scroll', () => {
+      if (isSnapping || isInSkills) return;
+      if (snapTimeout) clearTimeout(snapTimeout);
+
+      snapTimeout = setTimeout(() => {
+        const pos = lenis.scroll + NAV_HEIGHT + 20;
+        let nearest: HTMLElement | null = null;
+        let minDiff = Infinity;
+
+        sections.forEach(sec => {
+          const diff = Math.abs(pos - sec.offsetTop);
+          if (diff < minDiff) {
+            minDiff = diff;
+            nearest = sec;
+          }
+        });
+
+        // Snap only if we're off by more than 40px
+        if (nearest && minDiff > 40) {
+          isSnapping = true;
+          lenis.scrollTo((nearest as HTMLElement).offsetTop - NAV_HEIGHT, {
+            duration: 0.9,
+            easing: (t: number) => 1 - Math.pow(1 - t, 3),
+            onComplete: () => { isSnapping = false; },
+          });
+        }
+      }, 120);
+    });
+  }
 
   // Smooth anchor navigation via Lenis
   document.addEventListener('click', (e) => {
